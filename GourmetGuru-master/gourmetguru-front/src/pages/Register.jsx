@@ -48,10 +48,7 @@ function Register() {
       setRegistrationMessage('Пароль повинен бути мінімум 5 символів');
       return;
     }
-    if(username.length <= 4){
-      setRegistrationMessage("Ім'я користувача закоротке")
-    }
-  
+   
     try {
       const response = await axios.post('http://localhost:8080/api/auth/sign-up', {
         username,

@@ -11,16 +11,19 @@ function Recipes() {
   const token = localStorage.getItem('userToken');
 
   useEffect(() => {
-    async function fetchCusines() {
+    async function fetchCuisines() {
       try {
         const data = await DataProvider.getList('http://localhost:8080/api/cuisines', token);
-        setCusines(data);
+        // Обрізаємо масив до перших 6 елементів
+        const firstSixCuisines = data.slice(0, 6);
+        setCusines(firstSixCuisines);
+       
       } catch (error) {
         console.error('Error fetching cuisines:', error);
       }
     }
 
-    fetchCusines();
+    fetchCuisines();
   }, [token]); // Added token to the dependency array
 
   if (cusines.length === 0) { // Changed from null to 0
@@ -40,12 +43,16 @@ function Recipes() {
             <ul>
               <div className="check-country">
                 <li><h3>Відбір за країною</h3></li>
-                {cusines.map(cuisine => (
-                  <li key={cuisine.id}> {/* Added key prop */}
+                
+                {
+                cusines.map(cuisine => (
+                  <li key={cuisine.id}> 
                     <input type="checkbox" />
-                    <label htmlFor="">{cuisine.name}</label> {/* Fixed: cuisine.name */}
+                    <label htmlFor="">{cuisine.name}</label> 
                   </li>
-                ))}
+                ))
+                
+                }
               </div>
 
               <div className="check-type">

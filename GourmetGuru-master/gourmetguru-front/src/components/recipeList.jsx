@@ -14,6 +14,7 @@ function RecipeList({ route }) {
         if (isAuthorised) {
           const data = await DataProvider.getList(route, token);
           setRecipes(data);
+         
         }
       } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -24,6 +25,13 @@ function RecipeList({ route }) {
   }, [isAuthorised, route, token]);
 
   if (recipes.length === 0) {
+    return (
+      <div>
+        <h2>Помилка завантаження!</h2>
+      </div>
+    );
+  }
+  if (!isAuthorised) {
     return (
       <div>
         <h2>Необхідно зареєструватись!</h2>
